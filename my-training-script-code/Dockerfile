@@ -1,18 +1,10 @@
-FROM pytorch/pytorch:latest
+FROM python:3.9-slim
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
-RUN pip install --no-cache-dir \
-    boto3 \
-    mlflow
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Copy source code
-COPY src/ /app/src/
+COPY src/ .
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
-
-# Set the entrypoint
-ENTRYPOINT ["python", "src/main.py"]
+CMD ["python", "main.py"]
